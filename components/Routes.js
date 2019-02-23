@@ -11,7 +11,7 @@ const stack = createStackNavigator({
   Login: Login
 },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Login",
   }
 );
 
@@ -20,7 +20,7 @@ const RootStack = createDrawerNavigator(
     stack: {
       screen: stack,
       navigationOptions: {
-        drawerLockMode: "locked-closed",
+        // drawerLockMode: "locked-closed",
       }
     }
   },
