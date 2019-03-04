@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, AsyncStorage, ScrollView } from 'react-native';
 import styles from './../../styles/style';
 import { HeaderBackButton } from 'react-navigation';
-import { WHITE, BLUE } from './../../util/color-contants'  
+import { WHITE, BLUE } from './../../util/color-contants';
+import { signIn, initialiseFirebase } from './../../util/firebaseManager';
 
 class LoginScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -18,13 +19,19 @@ class LoginScreen extends React.Component {
     });
     constructor(props) {
         super(props);
+        this.state = {
+            email: '',
+            password: '',
+            Toast: ''
+        }
+        initialiseFirebase();
     }
 
     setEmptyToast = () => {
         setTimeout(() => {
-            // this.setState({
-            //     Toast: ''
-            // })
+            this.setState({
+                Toast: ''
+            })
         }, 3000);
     }
 
@@ -35,6 +42,24 @@ class LoginScreen extends React.Component {
     focusNextField(nextField) {
         this.refs[nextField].focus()
     }
+    verifyUser = () => {
+        if (this.state.email && this.state.password) {
+            signIn(this.state.email, this.state.password)
+                .then((data) => {
+                    console.log("asasasasa", data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+        else {
+            this.setState({
+                Toast: 'Please fill all the information'
+            })
+            setEmptyToast();
+            console.log("Please fill all the fields");
+        }
+    }
 
     render() {
         return (
@@ -44,6 +69,7 @@ class LoginScreen extends React.Component {
                         <View style={styles.ContentOuterWrapper}>
                             <View style={styles.contentWrapper}>
                                 <View style={styles.fieldsWrapper}>
+                                    <Text style={styles.Toast}>{this.state.Toast}</Text>
                                     <TextInput
                                         onSubmitEditing={() => this.focusNextField('password')}
                                         ref="emailAddress"

@@ -68,5 +68,17 @@ export default StyleSheet.create({
   PhoneNumberWrap: {
     textDecorationLine: 'underline',
   },
+  Toast: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    color: 'red',
+    paddingBottom: 8,
+  },
+  ToastSuccess: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    color: 'green',
+    paddingBottom: 8,
+  },
 
 });
