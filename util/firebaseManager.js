@@ -12,6 +12,7 @@ const config = {
 
 export function initialiseFirebase() {
     if (!firebase.apps.length) {
+        console.log("Initialize");
         firebase.initializeApp(config);
     }
 }

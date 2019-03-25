@@ -4,14 +4,28 @@ import Home from './Home/Home';
 import Profile from './Profile/Profile';
 import Login from './Login/Login';
 import Sidebar from './Sidebar/Sidebar';
+import Notification from './Notification/Notification';
+import Signup from './Signup/Signup';
+import Notice from './Notice/Notice';
+import Timeline from './Timeline/Timeline';
+import Landing from './Landing/Landing';
+import Almuniup from './Alumniup/Alumniup';
+import Almunipro from './Alumnipro/Almunipro';
 
 const stack = createStackNavigator({
   Home: Home,
   Profile: Profile,
-  Login: Login
+  Login: Login,
+  Notification:Notification,
+  Signup:Signup,
+  Notice:Notice,
+  Timeline:Timeline,
+  Landing: Landing,
+  Almuniup: Almuniup,
+  Almunipro: Almunipro
 },
   {
-    initialRouteName: "Login",
+    initialRouteName: "Landing",
   }
 );
 

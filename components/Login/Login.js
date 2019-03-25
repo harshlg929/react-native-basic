@@ -46,6 +46,7 @@ class LoginScreen extends React.Component {
         if (this.state.email && this.state.password) {
             signIn(this.state.email, this.state.password)
                 .then((data) => {
+                    this.props.navigation.navigate("Timeline")
                     console.log("asasasasa", data);
                 })
                 .catch((error) => {
