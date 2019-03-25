@@ -42,6 +42,7 @@ class LoginScreen extends React.Component {
     focusNextField(nextField) {
         this.refs[nextField].focus()
     }
+
     verifyUser = () => {
         if (this.state.email && this.state.password) {
             signIn(this.state.email, this.state.password)
@@ -50,6 +51,10 @@ class LoginScreen extends React.Component {
                     console.log("asasasasa", data);
                 })
                 .catch((error) => {
+                    this.setState({
+                        Toast: "The information you enter is invalid"
+                    })
+                    this.setEmptyToast();
                     console.log(error);
                 })
         }
@@ -57,7 +62,7 @@ class LoginScreen extends React.Component {
             this.setState({
                 Toast: 'Please fill all the information'
             })
-            setEmptyToast();
+            this.setEmptyToast();
             console.log("Please fill all the fields");
         }
     }

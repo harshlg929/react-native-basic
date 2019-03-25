@@ -5,7 +5,7 @@ import {
   TextInput,
   StyleSheet
 } from 'react-native';
-import { signUp, setUserInsideUserType, setUserDataInsideParticularType } from './../../util/firebaseManager';
+import { signUp, setUserInsideUserType, setUserDataInsideParticularType, sendVerificationEmail } from './../../util/firebaseManager';
 
 export default class SignUp extends React.Component {
   state = {
@@ -27,6 +27,13 @@ export default class SignUp extends React.Component {
       signUp(this.state.email, this.state.password)
         .then((data) => {
           this.props.navigation.navigate("Login");
+          sendVerificationEmail(data)
+            .then(() => {
+              console.log("Verification mail sent to email");
+            })
+            .catch((error) => {
+              console.log(error);
+            })
           console.log("data Get ", data.user.uid);
           setUserInsideUserType(data.user.uid, this.state.designation)
             .then((data) => {
