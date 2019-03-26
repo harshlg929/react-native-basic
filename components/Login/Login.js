@@ -47,15 +47,21 @@ class LoginScreen extends React.Component {
         if (this.state.email && this.state.password) {
             signIn(this.state.email, this.state.password)
                 .then((data) => {
-                    this.props.navigation.navigate("Timeline")
-                    console.log("asasasasa", data);
+                    if (data.emailVerified) {
+                        this.props.navigation.navigate("Timeline")
+                    }
+                    else { 
+                        this.setState({
+                            Toast: "Email is not verified, please verify your email"
+                        })
+                        this.setEmptyToast();
+                    }
                 })
                 .catch((error) => {
                     this.setState({
                         Toast: "The information you enter is invalid"
                     })
                     this.setEmptyToast();
-                    console.log(error);
                 })
         }
         else {

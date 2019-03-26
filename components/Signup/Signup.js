@@ -3,7 +3,10 @@ import {
   View,
   Button,
   TextInput,
-  StyleSheet
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform
 } from 'react-native';
 import { signUp, setUserInsideUserType, setUserDataInsideParticularType, sendVerificationEmail } from './../../util/firebaseManager';
 
@@ -34,7 +37,6 @@ export default class SignUp extends React.Component {
             .catch((error) => {
               console.log(error);
             })
-          console.log("data Get ", data.user.uid);
           setUserInsideUserType(data.user.uid, this.state.designation)
             .then((data) => {
               console.log("data signup", data);
@@ -49,7 +51,6 @@ export default class SignUp extends React.Component {
             .catch((error) => {
               console.log(error);
             })
-          console.log("asasasasa", data);
         })
         .catch((error) => {
           console.log(error);
@@ -60,69 +61,72 @@ export default class SignUp extends React.Component {
         Toast: 'Please fill all the information'
       })
       setEmptyToast();
-      console.log("Please fill all the fields");
     }
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder='Username'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ username: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Password'
-          secureTextEntry={true}
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ password: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Email'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ email: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Phone Number'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ phone_number: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Batch'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ batch: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Company Name'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ company_name: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Designation'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={(text) => this.setState({ designation: text })}
-        />
+      <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={Platform.OS === 'android' ? 100 : 0} style={{ flex: 1, backgroundColor: BLUE }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }} keyboardShouldPersistTaps='always'>
+          <View style={styles.container}>
+            <TextInput
+              style={styles.input}
+              placeholder='Username'
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ username: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Password'
+              secureTextEntry={true}
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ password: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Email'
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ email: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Phone Number'
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ phone_number: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Batch'
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ batch: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Company Name'
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ company_name: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder='Designation'
+              autoCapitalize="none"
+              placeholderTextColor='white'
+              onChangeText={(text) => this.setState({ designation: text })}
+            />
 
-        <Button
-          title='Sign Up'
-          onPress={this.signUp}
-        />
-      </View>
+            <Button
+              title='Sign Up'
+              onPress={this.signUp}
+            />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     )
   }
 }

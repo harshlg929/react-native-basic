@@ -8,15 +8,22 @@ import {
 import { initialiseFirebase } from "./../../util/firebaseManager";
 
 export default class Landing extends React.Component {
+  static navigationOptions = () => ({
+    header: null
+  });
+
   Login = () => {
     this.props.navigation.navigate('Login')
   }
+
   Signup = () => {
     this.props.navigation.navigate('Signup')
   }
+
   componentDidMount() {
     initialiseFirebase();
   }
+
   render() {
     return (
       <View style={styles.header}>
@@ -25,10 +32,12 @@ export default class Landing extends React.Component {
           <Text style={styles.Welcome}>Alma Connect</Text>
           <Text style={styles.Network}>'Let's increase your netwrok'</Text>
           <Button
+            style={styles.buttonStyle}
             title='Login'
             onPress={this.Login}
           />
           <Button
+           style={styles.buttonStyle}
             title='Signup'
             onPress={this.Signup}
           />
@@ -43,8 +52,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#4E1F60",
     height: "100%",
   },
-
+  buttonStyle: { 
+    margin: 20
+  },
   Welcome: {
+    display: "flex",
+    justifyContent: "center",
     fontSize: 5,
     fontWeight: '700',
     margin: 10,
