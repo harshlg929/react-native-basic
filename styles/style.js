@@ -80,5 +80,42 @@ export default StyleSheet.create({
     color: 'green',
     paddingBottom: 8,
   },
+  HeadingLandingPage: {
+    color: WHITE,
+    fontWeight: 'bold',
+    fontSize: 36,
+    textAlign: 'center',
+    width: '100%',
+    marginTop: 5,
+    paddingVertical: 28,
+  },
+  RegisterPhotoButton: {
+    backgroundColor: WHITE,
+    width: '100%',
+    paddingVertical: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ThankYouWrapper: {
+    flex: 1,
+    alignSelf: 'center',
+    width: '90%',
+    justifyContent: 'center',
+  },
+  headingRegisterSuccussefully: {
+    fontSize: 28,
+    color: WHITE,
+    fontWeight: 'bold',
+    paddingTop: 25,
+    paddingBottom: 5,
+    textAlign: 'center',
+  },
+  HeadingSplashScreen: {
+    color: WHITE,
+    textAlign: 'center',
+    fontSize: 20,
+    paddingTop: 20
+  },
 
 });

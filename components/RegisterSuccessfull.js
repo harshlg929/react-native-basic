@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
-import styles from './../../styles/style';
-import { LOGO_TEXT } from './../../images/image';
+import { View, Text, TouchableOpacity } from 'react-native';
+import styles from './../styles/style'
 
 
 class ThankYouScreen extends React.Component {
@@ -10,15 +9,15 @@ class ThankYouScreen extends React.Component {
     });
     componentDidMount() {
         setTimeout(() => {
-            this.props.navigation.navigate('LandingPage')
-          }, 20000);
+            this.props.navigation.navigate('Landing')
+          }, 5000);
     }
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.ThankYouWrapper}>
                     <View>
-                        <TouchableOpacity onPress={()=> this.props.navigation.navigate('LandingPage')}>
+                        <TouchableOpacity onPress={()=> this.props.navigation.navigate('Landing')}>
                         {/* <Image 
                             source={LOGO_TEXT}
                             style={styles.Logo}

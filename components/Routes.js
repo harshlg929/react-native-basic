@@ -11,6 +11,7 @@ import Timeline from './Timeline/Timeline';
 import Landing from './Landing/Landing';
 import Almuniup from './Alumniup/Alumniup';
 import Almunipro from './Alumnipro/Almunipro';
+import ThankYouScreen from "./../components/RegisterSuccessfull";
 
 const stack = createStackNavigator({
   Home: Home,
@@ -22,7 +23,8 @@ const stack = createStackNavigator({
   Timeline:Timeline,
   Landing: Landing,
   Almuniup: Almuniup,
-  Almunipro: Almunipro
+  Almunipro: Almunipro,
+  ThankYouScreen: ThankYouScreen
 },
   {
     initialRouteName: "Landing",

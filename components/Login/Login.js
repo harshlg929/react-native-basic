@@ -69,7 +69,6 @@ class LoginScreen extends React.Component {
                 Toast: 'Please fill all the information'
             })
             this.setEmptyToast();
-            console.log("Please fill all the fields");
         }
     }
 
