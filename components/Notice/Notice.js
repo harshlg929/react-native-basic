@@ -1,59 +1,101 @@
 import React from 'react'
 import {
   View,
-  Button,
-  TextInput,
-  StyleSheet
-} from 'react-native'
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  TouchableOpacity,
+  Text
+} from 'react-native';
+import styles from './../../styles/style';
+import Textarea from 'react-native-textarea';
+import { WHITE, BLUE, BLACK } from './../../util/color-contants';
+import { setNotice, initialiseFirebase } from "./../../util/firebaseManager";
 
 export default class Notice extends React.Component {
   state = {
-    add_notice: '',
+    addNotice: '',
+    Toast: ''
   }
-  onChangeText = (key, val) => {
-    this.setState({ [key]: val })
+  componentDidMount() {
+    initialiseFirebase();
   }
- add_notice = async () => {
-    const { add_notice } = this.state
 
+  addNotice = () => {
+    if (this.state.addNotice) {
+      setNotice(this.state.addNotice)
+        .then((data) => {
+          this.setState({
+            Toast: "Notice Added Successfully"
+          })
+          this.setEmptyToast();
+        })
+        .catch((error) => {
+          this.setState({
+            Toast: "Please enter the information"
+          })
+          this.setEmptyToast();
+        })
+
+    }
+    else {
+      this.setState({
+        Toast: "Please enter the information"
+      })
+      this.setEmptyToast();
+    }
   }
- 
+
+
+  setEmptyToast = () => {
+    setTimeout(() => {
+      this.setState({
+        Toast: ''
+      })
+    }, 3000);
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder='                 Kindly write here'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('add_notice', val)}
-        />
-         
+      <KeyboardAvoidingView behavior={'padding'} keyboardVerticalOffset={Platform.OS === 'android' ? 100 : 0} style={{ flex: 1, backgroundColor: BLUE }} enabled>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }} keyboardShouldPersistTaps='always'>
+          <View style={styles.container}>
+            <View style={[styles.ContentOuterWrapper, { paddingTop: 20 }]}>
+              <Text style={styles.RegisterHeading}>
+                Add Notice or some information
+              </Text>
+              <Text style={styles.Toast}>{this.state.Toast}</Text>
+              <View style={styles.textAreaContainer} >
+                <Textarea
+                  containerStyle={styles.textAreaContainer}
+                  style={styles.textarea}
+                  selectionColor={BLACK}
+                  onChangeText={(text) => this.setState({ addNotice: text })}
+                  placeholder="Click here to add Notice"
+                  placeholderTextColor="grey"
+                  underlineColorAndroid={'transparent'}
+                  multiline={true}
+                />
+              </View>
+              {/* <TextInput
+                style={styles.input}
+                placeholder='Kindly write here'
+                autoCapitalize="none"
+                placeholderTextColor='white'
+                onChangeText={val => this.setState({ addNotice: val })}
+              /> */}
+              <TouchableOpacity style={styles.SubmitButton} onPress={this.addNotice}>
+                <Text style={styles.submitButtonText}> Add Notice </Text>
+              </TouchableOpacity>
+              {/* <Button
+                title='Add Notice'
+                onPress={this.addNotice}
+              /> */}
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
-        <Button
-          title='Add Notice'
-          onPress={this.add_notice}
-        />
-      </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    width: 300,
-    height: 405,
-    backgroundColor: '#42A5F5',
-    margin: 20,
-    padding: 10,
-    color: 'white',
-    borderRadius: 14,
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})

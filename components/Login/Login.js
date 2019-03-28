@@ -3,7 +3,7 @@ import { Text, View, TextInput, TouchableOpacity, Keyboard, KeyboardAvoidingView
 import styles from './../../styles/style';
 import { HeaderBackButton } from 'react-navigation';
 import { WHITE, BLUE } from './../../util/color-contants';
-import { signIn, initialiseFirebase } from './../../util/firebaseManager';
+import { signIn, initialiseFirebase, getUserType, getAllUsers } from './../../util/firebaseManager';
 
 class LoginScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -44,13 +44,37 @@ class LoginScreen extends React.Component {
     }
 
     verifyUser = () => {
+        let uid;
         if (this.state.email && this.state.password) {
             signIn(this.state.email, this.state.password)
                 .then((data) => {
-                    if (data.emailVerified) {
-                        this.props.navigation.navigate("Timeline")
+                    console.log(data.user.uid)
+                    if (data.user.emailVerified) {
+                        uid = data.user.uid;
+                        console.log("Uid",uid)
+                        getUserType(data.user.uid, "userType")
+                            .then((data) => {
+                                console.log(data);
+                                getAllUsers("Student", uid)
+                                    .then((data) => {
+                                        AsyncStorage.setItem("loggedIn", "true");
+                                        AsyncStorage.setItem("batch", data.batch);
+                                        AsyncStorage.setItem("email", this.state.email);
+                                        AsyncStorage.setItem("company_name", data.company_name);
+                                        AsyncStorage.setItem("phone_number", data.phone_number);
+                                        AsyncStorage.setItem("designation", data.designation);
+                                        AsyncStorage.setItem("username", data.username);
+                                        this.props.navigation.navigate("Aluminiup")
+                                    })
+                                    .catch((error) => {
+                                        console.log(error)
+                                    })
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            })
                     }
-                    else { 
+                    else {
                         this.setState({
                             Toast: "Email is not verified, please verify your email"
                         })

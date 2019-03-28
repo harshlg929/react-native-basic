@@ -3,20 +3,34 @@ import {
   View,
   TextInput,
   StyleSheet
-} from 'react-native'
+} from 'react-native';
+import { getNotice, initialiseFirebase, setNotice } from "./../../util/firebaseManager";
 
 export default class Timeline extends React.Component {
+  studentData;
   state = {
-    show_notice: '',
+    notice: []
   }
-  onChangeText = (key, val) => {
-    this.setState({ [key]: val })
+  constructor(props) {
+    super(props);
+    const { navigation } = this.props;
+    const studentData = navigation.getParam('studentData', 'NA');
+    this.studentData = studentData;
+    console.log(this.studentData);
   }
- show_notice = async () => {
-    const { show_notice } = this.state
-
+  componentDidMount() {
+    initialiseFirebase();
+    getNotice()
+    .then((data)=>{
+      this.setState({
+        notice: data
+      })
+      console.log(data);
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
   }
- 
   render() {
     return (
       <View style={styles.container}>
@@ -27,7 +41,6 @@ export default class Timeline extends React.Component {
           placeholderTextColor='white'
           onChangeText={val => this.onChangeText('show_notice', val)}
         />
-         
       </View>
     )
   }

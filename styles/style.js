@@ -60,6 +60,29 @@ export default StyleSheet.create({
     paddingBottom: 5,
     justifyContent: 'center',
   },
+  textAreaContainer: {
+    padding: 5,
+    backgroundColor: WHITE,
+    borderRadius: 5,
+    justifyContent: 'flex-start',
+    flex: 0.8,
+  },
+  RegisterHeading: {
+    fontSize: 20,
+    color: WHITE,
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  SubmitButton: {
+    backgroundColor: WHITE,
+    marginTop: 20,
+    paddingVertical: 13,
+    borderRadius: 5,
+  },
+  submitButtonText: {
+    color: BLUE,
+    alignSelf: 'center',
+  },
   BottomLinkText: {
     alignSelf: 'center',
     justifyContent: 'center',

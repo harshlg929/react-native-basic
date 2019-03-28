@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Text, View, TextInput, StyleSheet, Button, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, AsyncStorage, ScrollView
+  Text, View, TextInput, Picker, StyleSheet, Button, TouchableOpacity, Keyboard, KeyboardAvoidingView, Platform, AsyncStorage, ScrollView
 } from 'react-native';
 import { HeaderBackButton } from 'react-navigation';
 import { WHITE, BLUE } from './../../util/color-contants';
@@ -144,13 +144,17 @@ export default class SignUp extends React.Component {
                     placeholderTextColor='white'
                     onChangeText={(text) => this.setState({ company_name: text })}
                   />
-                  <TextInput
-                    style={styles.InputField}
-                    placeholder='Designation'
-                    autoCapitalize="none"
-                    placeholderTextColor='white'
-                    onChangeText={(text) => this.setState({ designation: text })}
-                  />
+                  <View style= {styles.InputField}>
+                  <Picker
+                    selectedValue={this.state.designation}
+                    style={{ height: 30, color: '#ffffff', width: '100%', padding: 0 }}
+                    onValueChange={(itemValue) =>
+                      this.setState({ designation: itemValue })
+                    }>
+                    <Picker.Item label="Student" value="Student" />
+                    <Picker.Item label="Alumini" value="Alumini" />
+                  </Picker>
+                    </View>
 
                   <Button
                     title='Sign Up'
@@ -165,22 +169,3 @@ export default class SignUp extends React.Component {
     )
   }
 }
-
-// const styles = StyleSheet.create({
-//   input: {
-//     width: 350,
-//     height: 55,
-//     backgroundColor: '#42A5F5',
-//     margin: 10,
-//     padding: 8,
-//     color: 'white',
-//     borderRadius: 14,
-//     fontSize: 18,
-//     fontWeight: '500',
-//   },
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center'
-//   }
-// })
