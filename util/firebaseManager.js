@@ -2,12 +2,12 @@
 import firebase from "firebase";
 
 const config = {
-    apiKey: "AIzaSyDz9v7Pixlee3PN59ZGmQ2GfgDm8NdNzz8",
-    authDomain: "react-native-basic-b46e8.firebaseapp.com",
-    databaseURL: "https://react-native-basic-b46e8.firebaseio.com",
-    projectId: "react-native-basic-b46e8",
-    storageBucket: "react-native-basic-b46e8.appspot.com",
-    messagingSenderId: "455507098098"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
 };
 
 export function initialiseFirebase() {
