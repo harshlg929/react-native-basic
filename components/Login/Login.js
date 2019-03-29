@@ -51,20 +51,19 @@ class LoginScreen extends React.Component {
                     console.log(data.user.uid)
                     if (data.user.emailVerified) {
                         uid = data.user.uid;
-                        console.log("Uid",uid)
                         getUserType(data.user.uid, "userType")
                             .then((data) => {
-                                console.log(data);
-                                getAllUsers("Student", uid)
+                                getAllUsers(data, uid)
                                     .then((data) => {
+                                        console.log('data: ', data);
                                         AsyncStorage.setItem("loggedIn", "true");
-                                        AsyncStorage.setItem("batch", data.batch);
-                                        AsyncStorage.setItem("email", this.state.email);
-                                        AsyncStorage.setItem("company_name", data.company_name);
-                                        AsyncStorage.setItem("phone_number", data.phone_number);
-                                        AsyncStorage.setItem("designation", data.designation);
+                                        AsyncStorage.setItem("mail", data.email);
                                         AsyncStorage.setItem("username", data.username);
-                                        this.props.navigation.navigate("Aluminiup")
+                                        AsyncStorage.setItem("phone_number", data.phone_number);
+                                        AsyncStorage.setItem("batch", data.batch);
+                                        AsyncStorage.setItem("company_name", data.company_name);
+                                        AsyncStorage.setItem("designation", data.designation);
+                                        this.props.navigation.navigate('Almuniup')
                                     })
                                     .catch((error) => {
                                         console.log(error)

@@ -6,6 +6,7 @@ import { HeaderBackButton } from 'react-navigation';
 import { WHITE, BLUE } from './../../util/color-contants';
 import { signUp, setUserInsideUserType, setUserDataInsideParticularType, sendVerificationEmail } from './../../util/firebaseManager';
 import styles from './../../styles/style';
+import { Ionicons } from '@expo/vector-icons';
 export default class SignUp extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTintColor: WHITE,
@@ -15,12 +16,17 @@ export default class SignUp extends React.Component {
       borderBottomWidth: 0,
       shadowOpacity: 0,
     },
+    headerRight:(<TouchableOpacity style={styles.headerStyle} onPress={() => {
+      navigation.toggleDrawer();
+    }}>
+      <Ionicons name="md-menu" size={40} color="white" style={{ marginRight: 12, }} />
+    </TouchableOpacity>),
     headerLeft: (<HeaderBackButton tintColor={WHITE} onPress={() => { navigation.goBack() }} />),
-    headerTitle: <View style={styles.HeaderView}><Text style={styles.HeaderText}>Student Profile</Text></View>
+    headerTitle: <View style={styles.HeaderView}><Text style={styles.HeaderText}>My Profile</Text></View>
   });
 
   state = {
-    username: '', password: '', Toast: '', email: '', phone: '', batch: '', companyName: '', designation: '',
+    userName: '', password: '', Toast: '', emailId: '', phone: '', batch: '', companyName: '', designation: '',
   }
 
   onChangeText = (key, val) => {
@@ -109,40 +115,40 @@ export default class SignUp extends React.Component {
     let batch = '';
     let companyName = '';
     let designation = '';
-    this.getItemFromLocalStorage('username')
-      .then((value) => {
-        userName = value;
-        return this.getItemFromLocalStorage('dateOfBirth');
-      })
+    this.getItemFromLocalStorage('email')
       .then((value) => {
         email = value;
-        return this.getItemFromLocalStorage('email');
+        return this.getItemFromLocalStorage('username');
+      })
+      .then((value) => {
+        userName = value;
+        return this.getItemFromLocalStorage('phone_number');
       })
       .then((value) => {
         phone = value;
-        return this.getItemFromLocalStorage('phone_number')
-      })
-      .then((value) => {
-        batch = value;
         return this.getItemFromLocalStorage('batch')
       })
       .then((value) => {
-        companyName = value;
+        batch = value;
         return this.getItemFromLocalStorage('company_name')
       })
       .then((value) => {
-        designation = value;
+        companyName = value;
         return this.getItemFromLocalStorage('designation')
+      })
+      .then((value) => {
+        designation = value;
       })
       .then((value) => {
         this.setState({
           userName: userName,
-          email: email,
+          emailId: email,
           phone: phone,
           batch: batch,
           companyName: companyName,
           designation: designation
         });
+        console.log(this.state);
       })
       .catch((error) => {
         console.log('error: ', error);
@@ -160,28 +166,31 @@ export default class SignUp extends React.Component {
                 <View style={styles.fieldsWrapper}>
                   <Text style={styles.Toast}>{this.state.Toast}</Text>
                   <TextInput
+                    value={this.state.userName}
                     style={styles.InputField}
                     placeholder='username'
                     autoCapitalize="none"
                     placeholderTextColor='white'
-                    onChangeText={(text) => this.setState({ username: text })}
+                    onChangeText={(text) => this.setState({ userName: text })}
                   />
-                  <TextInput
+                  {/* <TextInput
                     style={styles.InputField}
                     placeholder='Password'
                     secureTextEntry={true}
                     autoCapitalize="none"
                     placeholderTextColor='white'
                     onChangeText={(text) => this.setState({ password: text })}
-                  />
+                  /> */}
                   <TextInput
+                    value={this.state.emailId}
                     style={styles.InputField}
                     placeholder='Email'
                     autoCapitalize="none"
                     placeholderTextColor='white'
-                    onChangeText={(text) => this.setState({ email: text })}
+                    onChangeText={(text) => this.setState({ emailId: text })}
                   />
-                  <TextInput
+                  <TextInput                    
+                    value={this.state.phone}
                     style={styles.InputField}
                     placeholder='Phone Number'
                     autoCapitalize="none"
@@ -189,6 +198,7 @@ export default class SignUp extends React.Component {
                     onChangeText={(text) => this.setState({ phone: text })}
                   />
                   <TextInput
+                    value={this.state.batch}
                     style={styles.InputField}
                     placeholder='Batch'
                     autoCapitalize="none"
@@ -196,6 +206,7 @@ export default class SignUp extends React.Component {
                     onChangeText={(text) => this.setState({ batch: text })}
                   />
                   <TextInput
+                    value={this.state.companyName}
                     style={styles.InputField}
                     placeholder='Company Name'
                     autoCapitalize="none"
@@ -203,6 +214,7 @@ export default class SignUp extends React.Component {
                     onChangeText={(text) => this.setState({ companyName: text })}
                   />
                   <TextInput
+                    value={this.state.designation}
                     style={styles.InputField}
                     placeholder='Designation'
                     autoCapitalize="none"

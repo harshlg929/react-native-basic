@@ -64,6 +64,7 @@ export default StyleSheet.create({
     padding: 5,
     backgroundColor: WHITE,
     borderRadius: 5,
+    marginBottom:5,
     justifyContent: 'flex-start',
     flex: 0.8,
   },
@@ -139,6 +140,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     paddingTop: 20
+  },
+  BackgroundContainer: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: BLUE,
   },
 
 });

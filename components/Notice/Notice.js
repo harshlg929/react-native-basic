@@ -7,12 +7,24 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
+import { HeaderBackButton } from 'react-navigation';
 import styles from './../../styles/style';
 import Textarea from 'react-native-textarea';
 import { WHITE, BLUE, BLACK } from './../../util/color-contants';
 import { setNotice, initialiseFirebase } from "./../../util/firebaseManager";
 
 export default class Notice extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerTintColor: WHITE,
+    headerStyle: {
+      backgroundColor: BLUE,
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
+    },
+    headerLeft: (<HeaderBackButton tintColor={WHITE} onPress={() => { navigation.goBack() }} />),
+    headerTitle: <View style={styles.HeaderView}><Text style={styles.HeaderText}>Add Notice</Text></View>
+  });
   state = {
     addNotice: '',
     Toast: ''

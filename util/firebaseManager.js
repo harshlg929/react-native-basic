@@ -79,9 +79,15 @@ export function getAllUsers(userType, uid) {
     return new Promise((resolve, reject) => {
         var database = firebase.database();
         database.ref('/users/' + userType + '/' + uid).once('value')
-            .then((response) => {
-                resolve(response);
-            })
+            .then(
+                function (snapshot) {
+                    var user = (snapshot.val())
+                    for (key in user) {
+                        if (user.hasOwnProperty(key)) {
+                            resolve(user)
+                        }
+                    }
+                })
             .catch((error) => {
                 reject(error);
             })
@@ -92,9 +98,11 @@ export function getUserType(uid, userType) {
     return new Promise((resolve, reject) => {
         var database = firebase.database();
         database.ref('/users/' + userType + '/' + uid).once('value')
-            .then((response) => {
-                resolve(response);
-            })
+            .then(
+                function (snapshot) {
+                    var userType = (snapshot.val() && snapshot.val().userType)
+                    resolve(userType);
+                })
             .catch((error) => {
                 reject(error);
             })
@@ -153,8 +161,27 @@ export function getNotice() {
     return new Promise((resolve, reject) => {
         var database = firebase.database();
         database.ref('/notice/').once('value')
-            .then((response) => {
-                resolve(response);
+            .then(function (snapshot) {
+                let data = [];
+                snapshot.forEach(function (childSnapshot) {
+                    // var key = childSnapshot; // "ada"
+                    data.push(childSnapshot.key)
+                })
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error);
+            })
+    })
+}
+
+export function getNoticeId(id) {
+    return new Promise((resolve, reject) => {
+        var database = firebase.database();
+        database.ref('/notice/' + id).once('value')
+            .then(function (snapshot) {
+                var userType = (snapshot.val() && snapshot.val().notice)
+                resolve(userType);
             })
             .catch((error) => {
                 reject(error);

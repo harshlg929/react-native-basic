@@ -20,7 +20,7 @@ export default class SignUp extends React.Component {
   });
 
   state = {
-    username: '', password: '', Toast: '', email: '', phone_number: '', batch: '', company_name: '', designation: '',
+    username: '', password: '', Toast: '', email: '', phone_number: '', batch: '', company_name: '', designation: 'Student',
   }
 
   onChangeText = (key, val) => {
@@ -42,6 +42,7 @@ export default class SignUp extends React.Component {
       phone_number: this.state.phone_number,
       batch: this.state.batch,
       company_name: this.state.company_name,
+      designation: this.state.designation
 
     }
     if (this.state.email && this.state.password) {
@@ -145,11 +146,12 @@ export default class SignUp extends React.Component {
                     onChangeText={(text) => this.setState({ company_name: text })}
                   />
                   <View style= {styles.InputField}>
-                  <Picker
-                    selectedValue={this.state.designation}
-                    style={{ height: 30, color: '#ffffff', width: '100%', padding: 0 }}
-                    onValueChange={(itemValue) =>
-                      this.setState({ designation: itemValue })
+                    <Picker
+                      selectedValue={this.state.designation}
+                      style={{ height: 30, color: '#ffffff', width: '100%', padding: 0 }}
+                      onValueChange={(itemValue, index) => {
+                        this.setState({ designation: itemValue });
+                        }
                     }>
                     <Picker.Item label="Student" value="Student" />
                     <Picker.Item label="Alumini" value="Alumini" />

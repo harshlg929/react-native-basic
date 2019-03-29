@@ -35,9 +35,9 @@ const RootStack = createDrawerNavigator(
   {
     stack: {
       screen: stack,
-      // navigationOptions: {
-      //   drawerLockMode: "locked-closed",
-      // }
+      navigationOptions: {
+        drawerLockMode: "locked-closed",
+      }
     }
   },
   {

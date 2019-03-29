@@ -1,66 +1,83 @@
 import React from 'react'
 import {
-  View,
-  TextInput,
-  StyleSheet
+  View, Text, ScrollView,TouchableOpacity
 } from 'react-native';
-import { getNotice, initialiseFirebase, setNotice } from "./../../util/firebaseManager";
+import { Ionicons } from '@expo/vector-icons';
+import styles from './../../styles/style';
+import { HeaderBackButton } from 'react-navigation';
+import { WHITE, BLUE } from './../../util/color-contants';
+import { getNotice, initialiseFirebase, getNoticeId } from "./../../util/firebaseManager";
 
 export default class Timeline extends React.Component {
+  noticeData = [];
+  static navigationOptions = ({ navigation }) => ({
+    headerTintColor: WHITE,
+    headerStyle: {
+      backgroundColor: BLUE,
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
+    },
+    headerRight:(<TouchableOpacity style={styles.headerStyle} onPress={() => {
+      navigation.toggleDrawer();
+    }}>
+      <Ionicons name="md-menu" size={40} color="white" style={{ marginRight: 12, }} />
+    </TouchableOpacity>),
+    headerLeft: (<HeaderBackButton tintColor={WHITE} onPress={() => { navigation.goBack() }} />),
+    headerTitle: <View style={styles.HeaderView}><Text style={styles.HeaderText}>Notices</Text></View>
+  });
+  constructor(props) { 
+    super(props);
+    initialiseFirebase();
+    this.getNoticeFromId();
+  }
   studentData;
   state = {
-    notice: []
+    result: '',
+    noteData: '',
   }
-  constructor(props) {
-    super(props);
-    const { navigation } = this.props;
-    const studentData = navigation.getParam('studentData', 'NA');
-    this.studentData = studentData;
-    console.log(this.studentData);
-  }
-  componentDidMount() {
-    initialiseFirebase();
+
+  getNoticeFromId = () => {
     getNotice()
-    .then((data)=>{
-      this.setState({
-        notice: data
+      .then((data) => {
+        this.setState({
+          result: data
+        })
+        data.map(data => {
+          getNoticeId(data)
+            .then((data) => {
+              this.noticeData.push(data)
+              this.setState({
+                noteData: this.noticeData
+              })
+            })
+            .catch((error) => {
+              console.log('error: ', error);
+            })
+        })
       })
-      console.log(data);
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log('error: ', error);
+      })
   }
+
+  // componentDidMount() {
+  //   this.getNoticeFromId();
+  // }
+
   render() {
-    return (
+    return (<ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }} keyboardShouldPersistTaps='always'>
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder='        Jo notice hai show hoga'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-          onChangeText={val => this.onChangeText('show_notice', val)}
-        />
+        <View style={[styles.ContentOuterWrapper, { paddingTop: 20 }]}>
+          {this.state.noteData ?
+            this.state.noteData.map((notice, index) => (
+              <View style={styles.textAreaContainer} >
+                <Text key={index}>{notice}</Text>
+              </View>
+            )) : null}
+        </View>
       </View>
+    </ScrollView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    width: 300,
-    height: 405,
-    backgroundColor: '#42A5F5',
-    margin: 20,
-    padding: 10,
-    color: 'white',
-    borderRadius: 14,
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
