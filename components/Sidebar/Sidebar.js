@@ -51,7 +51,7 @@ class SideMenu extends Component {
         <ScrollView>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Almuniup')}>
             <View style={styles.ioniconsWrapper}>
-              <Ionicons name="md-log-in" size={28} color="black" style={styles.IoniconsSidebar} />
+              <Ionicons name="ios-contact" size={28} color="black" style={styles.IoniconsSidebar} />
               <Text style={styles.sectionHeadingStyle}>
                 My Profile
               </Text>
@@ -62,7 +62,7 @@ class SideMenu extends Component {
             <View>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Notice')}>
                 <View style={styles.ioniconsWrapper}>
-                  <Ionicons name="md-log-in" size={28} color="black" style={styles.IoniconsSidebar} />
+                  <Ionicons name="md-add-circle" size={28} color="black" style={styles.IoniconsSidebar} />
                   <Text style={styles.sectionHeadingStyle}>
                     Add Notice
               </Text>
@@ -73,7 +73,7 @@ class SideMenu extends Component {
           }
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Timeline')}>
             <View style={styles.ioniconsWrapper}>
-              <Ionicons name="md-log-in" size={28} color="black" style={styles.IoniconsSidebar} />
+              <Ionicons name="md-paper" size={28} color="black" style={styles.IoniconsSidebar} />
               <Text style={styles.sectionHeadingStyle}>
                 View Notices
               </Text>
@@ -81,7 +81,7 @@ class SideMenu extends Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Landing')}>
             <View style={styles.ioniconsWrapper}>
-              <Ionicons name="md-log-in" size={28} color="black" style={styles.IoniconsSidebar} />
+              <Ionicons name="md-log-out" size={28} color="black" style={styles.IoniconsSidebar} />
               <Text style={styles.sectionHeadingStyle}>
                 Logout
               </Text>

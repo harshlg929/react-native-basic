@@ -71,8 +71,8 @@ export default class Timeline extends React.Component {
         <View style={[styles.ContentOuterWrapper, { paddingTop: 20 }]}>
           {this.state.noteData ?
             this.state.noteData.map((notice, index) => (
-              <View style={styles.textAreaContainer} >
-                <Text key={index}>{notice}</Text>
+              <View key={index} style={styles.textAreaContainer} >
+                <Text>{notice}</Text>
               </View>
             )) : null}
         </View>
